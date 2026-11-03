@@ -69,5 +69,12 @@ export async function handler(event) {
    return json(200,{name:p.name,recipient:recipient.name,ownWish:ownWish||'',recipientWish:recipientWish||'',config:data.config});
   }
   return json(400,{error:'Acción desconocida'});
- }catch(e){console.error('Familia2026:',e);return json(500,{error:'No se pudo acceder al almacenamiento. Comprueba que Netlify Functions y Blobs estén activos.'});}
+} catch (e) {
+  console.error('Familia2026:', e);
+  return json(500, {
+    error: 'Error del servidor: ' +
+      String(e?.name || 'Desconocido') +
+      ' (' + String(e?.code || 'sin código') + ')'
+  });
+}
 }
