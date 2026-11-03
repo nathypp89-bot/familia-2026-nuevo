@@ -1,0 +1,7 @@
+{
+  "name": "familia-2026-nuevo",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": { "@netlify/blobs": "^9.0.0" }
+}
