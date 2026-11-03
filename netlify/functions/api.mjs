@@ -1,4 +1,4 @@
-import { getStore } from '@netlify/blobs';
+import { getStore, connectLambda } from '@netlify/blobs';
 import { randomBytes, timingSafeEqual, createHash, randomInt } from 'node:crypto';
 
 const json = (statusCode, data) => ({ statusCode, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' }, body: JSON.stringify(data) });
@@ -23,7 +23,9 @@ function draw(people, exclusions) {
  return search(0,new Set(),{});
 }
 export async function handler(event) {
- if(event.httpMethod!=='POST')return json(405,{error:'Método no permitido'});
+  connectLambda(event);
+  if(event.httpMethod!=='POST')
+    return json(405,{error:'Método no permitido'});
  if((event.body||'').length>100000)return json(413,{error:'Solicitud demasiado grande'});
  let b;try{b=JSON.parse(event.body||'{}');}catch{return json(400,{error:'Datos inválidos'});}
  const action=b.action;
