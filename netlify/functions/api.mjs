@@ -6,7 +6,7 @@ const hash = v => createHash('sha256').update(v).digest('hex');
 const equal = (a,b) => { const x=Buffer.from(String(a??'')), y=Buffer.from(String(b??'')); return x.length===y.length && timingSafeEqual(x,y); };
 const token = () => randomBytes(32).toString('base64url');
 const clean = (v,max) => String(v??'').trim().slice(0,max);
-const store = () => getStore({ name: 'familia-2026-v2', consistency: 'strong' });
+const store = () => getStore('familia-2026-v2');
 const authenticated = (b) => Boolean(process.env.ADMIN_PASSWORD && process.env.ADMIN_PASSWORD.length>=12 && equal(b.password,process.env.ADMIN_PASSWORD));
 const shuffle = (xs) => { let a=[...xs]; for(let i=a.length-1;i>0;i--){const j=randomInt(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; };
 function draw(people, exclusions) {
